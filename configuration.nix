@@ -7,6 +7,10 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
 
+  hardware.graphics = {
+    enable = true;
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -42,6 +46,12 @@
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
+  ];
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    font-awesome
   ];
 
   # services.openssh.enable = true;

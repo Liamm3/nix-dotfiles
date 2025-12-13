@@ -16,6 +16,8 @@
     };
     settings.init.defaultBranch = "main";
   };
+  
+  # CLI Programs
   programs.zsh.enable = true;
   programs.lazygit = {
     enable = true;
@@ -33,8 +35,21 @@
     enable = true;
     defaultEditor = true;
   };
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.btop.enable = true;
-  programs.firefox.enable = true;
+
+  # Desktop
   programs.waybar.enable = true;
   programs.librewolf.enable = true;
   programs.kitty.enable = true;
