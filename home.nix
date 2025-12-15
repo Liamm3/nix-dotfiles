@@ -1,13 +1,28 @@
 { config, pkgs, inputs, ... }:
 
 {
+  home.stateVersion = "25.11";
   home.username = "liam";
   home.homeDirectory = "/home/liam";
+  home.packages = with pkgs; [
+    wget
+    libnotify
+    telegram-desktop
+    libreoffice
+    fastfetch
+    nautilus
+    brightnessctl
 
-  home.stateVersion = "25.11";
+    (writeShellScriptBin "nrs" ''
+      sudo nixos-rebuild switch --flake /home/liam/nix-dotfiles#genesis
+    '')
 
-  services.playerctld.enable = true;
+    (writeShellScriptBin "nrt" ''
+      sudo nixos-rebuild test --flake /home/liam/nix-dotfiles#genesis
+    '')
+  ];
 
+  # CLI Programs
   programs.git = {
     enable = true;
     settings.user = {
@@ -16,8 +31,7 @@
     };
     settings.init.defaultBranch = "main";
   };
-  
-  # CLI Programs
+  programs.gh.enable = true;
   programs.zsh.enable = true;
   programs.lazygit = {
     enable = true;
@@ -35,10 +49,6 @@
     enable = true;
     defaultEditor = true;
   };
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
@@ -51,7 +61,8 @@
 
   # Desktop
   programs.waybar.enable = true;
-  programs.librewolf.enable = true;
+  programs.wofi.enable = true;
+  programs.firefox.enable = true;
   programs.kitty.enable = true;
   programs.keepassxc.enable = true;
 
@@ -69,20 +80,20 @@
         "HYPRCURSOR_SIZE,24"
       ];
       "$mod" = "SUPER";
-      "$browser" = "librewolf";
+      "$browser" = "firefox";
       "$term" = "kitty";
-      "$fileManager" = "kitty -c yazi";
+      "$fileManager" = "nautilus";
       "$menu" = "wofi --show drun";
       general = {
         allow_tearing = false;
-	gaps_in = 10;
-	gaps_out = 20;
-	border_size = 3;
+	gaps_in = 8;
+	gaps_out = 8;
+	border_size = 1;
 	layout = "master";
       };
       decoration = {
-        rounding = 10;
-	rounding_power = 2;
+        rounding = 2;
+	rounding_power = 2.0;
 	shadow = {
 	  enabled = true;
 	  range = 4;
@@ -111,7 +122,6 @@
       ];
       bind = [
         "$mod SHIFT, Q, exit"
-        "$mod, C, killactive"
 
 	# Applications
         "$mod, W, exec, $browser"
@@ -123,12 +133,17 @@
 	"$mod, B, workspace, -1"
 	"$mod, N, workspace, +1"
 
+	# Window management
+        "$mod, C, killactive"
+
 	# Master layout
 	"$mod SHIFT, Return, layoutmsg, swapwithmaster"
 	"$mod, J, layoutmsg, cyclenext"
 	"$mod, K, layoutmsg, cycleprev"
 	"$mod SHIFT, J, layoutmsg, swapnext"
 	"$mod SHIFT, K, layoutmsg, swapprev"
+	"$mod, H, layoutmsg, mfact -0.1"
+	"$mod, L, layoutmsg, mfact +0.1"
 
         # Special workspace
 	"$mod, S, togglespecialworkspace, magic"
@@ -163,24 +178,27 @@
       ];
     };
   };
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      splash = false;
+      preload = [
+        "/home/liam/Pictures/Wallpapers/sidetracked.jpg"
+      ];
+      wallpaper = [
+        "LVDS-1,/home/liam/Pictures/Wallpapers/sidetracked.jpg"
+      ];
+    };
+  };
+  services.hyprpolkitagent.enable = true;
+  services.syncthing.enable = true;
+  services.mako.enable = true;
+  services.playerctld.enable = true;
 
-  home.packages = with pkgs; [
-    wget
-    wofi
-    dunst
-    telegram-desktop
-    libreoffice
-    fastfetch
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+  };
 
-    (writeShellScriptBin "nrs" ''
-      sudo nixos-rebuild switch --flake /home/liam/nix-dotfiles#genesis
-    '')
-
-    (writeShellScriptBin "nrt" ''
-      sudo nixos-rebuild test --flake /home/liam/nix-dotfiles#genesis
-    '')
-  ];
-
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
