@@ -1,7 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ 
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.default
+  ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "liam" = import ./home.nix;
+    };
+  };
 
   # nixpkgs.config.allowUnfree = true;
 
