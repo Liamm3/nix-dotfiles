@@ -5,11 +5,11 @@
     wget
 
     (writeShellScriptBin "nrs" ''
-      sudo nixos-rebuild switch --flake /home/liam/nix-dotfiles#genesis
+      sudo nixos-rebuild switch --flake /home/liam/nix-dotfiles
     '')
 
     (writeShellScriptBin "nrt" ''
-      sudo nixos-rebuild test --flake /home/liam/nix-dotfiles#genesis
+      sudo nixos-rebuild test --flake /home/liam/nix-dotfiles
     '')
   ];
 

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -13,7 +13,7 @@
   # Desktop
   programs.waybar.enable = true;
   programs.wofi.enable = true;
-  programs.firefox.enable = true;
+  programs.librewolf.enable = true;
   programs.kitty.enable = true;
   programs.keepassxc.enable = true;
 
@@ -31,7 +31,7 @@
         "HYPRCURSOR_SIZE,24"
       ];
       "$mod" = "SUPER";
-      "$browser" = "firefox";
+      "$browser" = "librewolf";
       "$term" = "kitty";
       "$fileManager" = "nautilus";
       "$menu" = "wofi --show drun";
@@ -130,7 +130,7 @@
     };
   };
   services.hyprpaper = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings = {
       splash = false;
       preload = [

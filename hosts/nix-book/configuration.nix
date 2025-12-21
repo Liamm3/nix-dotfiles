@@ -22,9 +22,8 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "genesis";
+  networking.hostName = "nix-book";
   networking.wireless.enable = true;
 
   time.timeZone = "Europe/Berlin";
@@ -46,7 +45,7 @@
     isNormalUser = true;
     description = "Liam";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
+    packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
@@ -63,6 +62,6 @@
     font-awesome
   ];
 
-  # services.openssh.enable = true;
-  system.stateVersion = "25.11";
+  system.stateVersion = "25.11"; # Did you read the comment?
+
 }
