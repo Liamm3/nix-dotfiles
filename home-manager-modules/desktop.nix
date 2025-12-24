@@ -11,19 +11,50 @@
   ];
 
   # Desktop
-  programs.waybar.enable = true;
   programs.wofi.enable = true;
   programs.librewolf.enable = true;
   programs.kitty.enable = true;
   programs.keepassxc.enable = true;
+  programs.waybar = {
+    enable = true;
+    settings.mainBar = {
+      layer = "top";
+      position = "top";
+      height = 30;
+      modules-left = [
+        "hyprland/workspaces"
+      ];
+      "hyprland/workspaces" = {
+        format = "{icon}";
+        format-icons = {
+          urgent = "";
+          active = "";
+          visible = "";
+          default = "";
+          empty = "";
+        };
+        all-outputs = false;
+      };
+    };
+    style = ''
+      
+    '';
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [
+      inputs.split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.split-monitor-workspaces
+    ];
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     settings = {
-      monitor =",preferred,auto,1";
+      plugin = {
+        split-monitor-workspaces.count = 5;
+      };
+      monitor = lib.mkDefault ",preferred,auto,1";
       exec-once = [
+	"hyprpm reload -n"
         "waybar"
       ];
       env = [
@@ -66,7 +97,7 @@
       input = {
         repeat_rate = 25;
 	repeat_delay = 170;
-	natural_scroll = true;
+	natural_scroll = lib.mkDefault false;
       };
       gesture = [
         "3, horizontal, workspace"
@@ -79,10 +110,17 @@
         "$mod, Return, exec, $term"
         "$mod, E, exec, $fileManager"
         "$mod, P, exec, $menu"
+        "$mod SHIFT, K, exec, keepassxc"
 
 	# Workspace movement
-	"$mod, B, workspace, -1"
-	"$mod, N, workspace, +1"
+	"$mod, B, split-cycleworkspaces, prev"
+	"$mod, N, split-cycleworkspaces, next"
+
+	# Monitor movement
+	"$mod, Comma, focusmonitor, -1"
+	"$mod, Period, focusmonitor, +1"
+	"$mod SHIFT, Comma, split-changemonitorsilent, prev"
+	"$mod SHIFT, Period, split-changemonitorsilent, next"
 
 	# Window management
         "$mod, C, killactive"
@@ -98,14 +136,14 @@
 
         # Special workspace
 	"$mod, S, togglespecialworkspace, magic"
-	"$mod SHIFT, S, movetoworkspace, special:magic"
+	"$mod SHIFT, S, split-movetoworkspace, special:magic"
       ]
       ++ (
         builtins.concatLists (builtins.genList(i :
 	  let ws = i + 1;
 	  in [
-	    "$mod, code:1${toString i}, workspace, ${toString ws}"
-	    "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+	    "$mod, code:1${toString i}, split-workspace, ${toString ws}"
+	    "$mod SHIFT, code:1${toString i}, split-workspace, ${toString ws}"
 	  ]
 	)
         9)

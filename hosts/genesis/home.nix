@@ -11,4 +11,6 @@
   home.stateVersion = "25.11";
   home.username = "liam";
   home.homeDirectory = "/home/liam";
+
+  wayland.windowManager.hyprland.natural_scroll = true;
 }
