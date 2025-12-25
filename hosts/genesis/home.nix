@@ -12,5 +12,5 @@
   home.username = "liam";
   home.homeDirectory = "/home/liam";
 
-  wayland.windowManager.hyprland.natural_scroll = true;
+  wayland.windowManager.hyprland.settings.natural_scroll = true;
 }
