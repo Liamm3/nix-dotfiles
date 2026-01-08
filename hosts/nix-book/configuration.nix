@@ -12,6 +12,7 @@
     users = {
       "liam" = import ./home.nix;
     };
+    backupFileExtension = "bak";
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
@@ -51,6 +52,8 @@
 
   # Programs
   programs.hyprland.enable = true;
+  # programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [

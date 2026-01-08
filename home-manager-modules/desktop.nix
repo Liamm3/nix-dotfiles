@@ -2,17 +2,36 @@
 
 {
   home.packages = with pkgs; [
-    libnotify
     telegram-desktop
     libreoffice
-    fastfetch
+    nitch
     nautilus
     brightnessctl
   ];
 
   # Desktop
   programs.wofi.enable = true;
-  programs.librewolf.enable = true;
+  programs.librewolf = {
+    enable = true;
+    profiles = {
+      private = {
+        id = 0;
+	settings = {
+	  "privacy.clearOnShutdown.history" = false;
+          "privacy.clearOnShutdown.cookies" = false;
+	};
+	search.default = "ddg";
+      };
+      work = {
+        id = 1;
+        settings = {
+	  "privacy.clearOnShutdown.history" = false;
+          "privacy.clearOnShutdown.cookies" = false;
+	};
+	search.default = "google";
+      };
+    };
+  };
   programs.kitty.enable = true;
   programs.keepassxc.enable = true;
   programs.waybar = {
@@ -25,7 +44,7 @@
         "hyprland/workspaces"
       ];
       "hyprland/workspaces" = {
-        format = "{icon}";
+        format = "{name}";
         format-icons = {
           urgent = "";
           active = "";
@@ -36,9 +55,6 @@
         all-outputs = false;
       };
     };
-    style = ''
-      
-    '';
   };
 
   wayland.windowManager.hyprland = {
@@ -92,6 +108,7 @@
 	preserve_split = true;
       };
       master = {
+	special_scale_factor = 0.8;
         new_status = "slave";
       };
       input = {
@@ -133,6 +150,7 @@
 	"$mod SHIFT, K, layoutmsg, swapprev"
 	"$mod, H, layoutmsg, mfact -0.1"
 	"$mod, L, layoutmsg, mfact +0.1"
+	"$mod, M, fullscreen, 1"
 
         # Special workspace
 	"$mod, S, togglespecialworkspace, magic"
@@ -143,7 +161,7 @@
 	  let ws = i + 1;
 	  in [
 	    "$mod, code:1${toString i}, split-workspace, ${toString ws}"
-	    "$mod SHIFT, code:1${toString i}, split-workspace, ${toString ws}"
+	    "$mod SHIFT, code:1${toString i}, split-movetoworkspacesilent, ${toString ws}"
 	  ]
 	)
         9)
@@ -171,11 +189,14 @@
     enable = lib.mkDefault true;
     settings = {
       splash = false;
+      # path = "/home/liam/nix-dotfiles/wallpapers/sky-1.jpg";
       preload = [
-        "/home/liam/Pictures/Wallpapers/sidetracked.jpg"
+        "/home/liam/nix-dotfiles/wallpapers/sky-1.jpg"
       ];
       wallpaper = [
-        "LVDS-1,/home/liam/Pictures/Wallpapers/sidetracked.jpg"
+        "eDP-1,/home/liam/nix-dotfiles/wallpapers/sky-1.jpg"
+        "DP-3,/home/liam/nix-dotfiles/wallpapers/sky-1.jpg"
+        "DP-5,/home/liam/nix-dotfiles/wallpapers/sky-1.jpg"
       ];
     };
   };
