@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    nixfmt
     wget
 
     (writeShellScriptBin "nrs" ''

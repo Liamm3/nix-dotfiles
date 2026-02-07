@@ -12,15 +12,22 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
     };
+    mango = {
+      url = "github:DreamMaoMao/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, mango, ... }@inputs: {
+    homeManagerModules.default = ./home-manager-modules;
+
     nixosConfigurations =  {
       genesis = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/genesis/configuration.nix
-	  home-manager.nixosModules.default
+          home-manager.nixosModules.default
+          mango.nixosModules.mango
         ];
       };
 
@@ -28,7 +35,9 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nix-book/configuration.nix
-           home-manager.nixosModules.default
+          ./nixos-modules
+          home-manager.nixosModules.default
+          mango.nixosModules.mango
         ];
       };
     };
