@@ -9,11 +9,14 @@
   imports = [
     ./programs
   ];
+  
+  nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
     telegram-desktop
     libreoffice
-        nautilus
+    nautilus
+    jetbrains.phpstorm
   ];
 
   xdg.userDirs = {
