@@ -8,5 +8,6 @@
     ./keepassxc.nix
     ./hyprland.nix
     ./mango.nix
+    ./anki.nix
   ];
 }
