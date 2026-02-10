@@ -44,7 +44,7 @@
 
       bind=SUPER,Return,spawn,foot
       bind=SUPER,p,spawn,rofi -show drun
-      bind=SUPER,w,spawn,firefox
+      bind=SUPER,w,spawn,librewolf
       bind=SUPER+SHIFT,k,spawn,keepasxc
       bind=SUPER+SHIFT,t,spawn,Telegram
       bind=SUPER+SHIFT,w,spawn_shell,killall -SIGUSR2 waybar
@@ -62,8 +62,8 @@
       bind=SUPER,8,view,8
       bind=SUPER,9,view,9
 
-      bind=NONE,XF86AudioRaiseVolume,spawn wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
-      bind=NONE,XF86AudioLowerVolume spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bind=NONE,XF86AudioRaiseVolume,spawn, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+      bind=NONE,XF86AudioLowerVolume,spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
       bind=NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
       bind=NONE,XF86AudioMicMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
       bind=NONE,XF86MonBrightnessUp,spawn,brightnessctl -e4 -n2 set 5%+
