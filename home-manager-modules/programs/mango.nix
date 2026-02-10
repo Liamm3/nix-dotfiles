@@ -62,6 +62,13 @@
       bind=SUPER,8,view,8
       bind=SUPER,9,view,9
 
+      bind=NONE,XF86AudioRaiseVolume,spawn wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+      bind=NONE,XF86AudioLowerVolume spawn,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bind=NONE,XF86AudioMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      bind=NONE,XF86AudioMicMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+      bind=NONE,XF86MonBrightnessUp,spawn,brightnessctl -e4 -n2 set 5%+
+      bind=NONE,XF86MonBrightnessDown,spawn,brightnessctl -e4 -n2 set 5%-
+
       bind=SUPER+SHIFT,1,tagsilent,1
       bind=SUPER+SHIFT,2,tagsilent,2
       bind=SUPER+SHIFT,3,tagsilent,3
