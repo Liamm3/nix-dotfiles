@@ -15,8 +15,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.wireless.enable = true;
-
+  networking.wireless = {
+    enable = true;
+    userControlled = true;
+    secretsFile = "/run/secrets/wireless.conf";
+    networks = {
+      "FRITZ!Box 7530 NN" = {
+        pskRaw = "ext:psk_home";
+      };
+    };
+  };
   time.timeZone = "Europe/Berlin";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -50,6 +58,8 @@
   environment.systemPackages = with pkgs; [
     vscodium
   ];
+
+  hardware.firmware = [ pkgs.linux-firmware ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
