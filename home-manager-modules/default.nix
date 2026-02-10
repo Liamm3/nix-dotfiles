@@ -9,7 +9,6 @@
     inputs.mango.hmModules.mango
     ./cli.nix
     ./desktop.nix
-    ./mango.nix
   ];
   
   programs.home-manager.enable = true;

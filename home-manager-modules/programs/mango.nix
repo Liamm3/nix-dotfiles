@@ -1,7 +1,5 @@
 { ... }:
 {
-  services.swaync.enable = true;
-
   wayland.windowManager.mango = {
     enable = true;
     settings = ''

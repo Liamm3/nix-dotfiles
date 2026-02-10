@@ -1,9 +1,16 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
     nixfmt
     wget
+    nitch
+    brightnessctl
 
     (writeShellScriptBin "nrs" ''
       sudo nixos-rebuild switch --flake /home/liam/nix-dotfiles
@@ -12,8 +19,13 @@
     (writeShellScriptBin "nrt" ''
       sudo nixos-rebuild test --flake /home/liam/nix-dotfiles
     '')
+    
+   (writeShellScriptBin "nu" ''
+      sudo nix flake update --flake /home/liam/nix-dotfiles
+    '')
   ];
 
+  programs.htop.enable = true;
   programs.git = {
     enable = true;
     settings.user = {
@@ -49,4 +61,9 @@
     enableZshIntegration = true;
   };
   programs.btop.enable = true;
+  programs.tealdeer = {
+    enable = true;
+    enableAutoUpdates = true;
+    settings.updates.auto_update = true;
+  };
 }

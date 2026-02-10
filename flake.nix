@@ -26,6 +26,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/genesis/configuration.nix
+          ./nixos-modules
           home-manager.nixosModules.default
           mango.nixosModules.mango
         ];
